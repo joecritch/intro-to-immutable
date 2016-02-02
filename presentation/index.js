@@ -254,14 +254,6 @@ export default class Presentation extends React.Component {
           <Slide transition={["slide"]} bgColor="black" notes={`
             <ul>
               <li>Immutable.js is a solution to this problem
-              <li>A library by Lee Byron, an engineer from Facebook
-              <li>Completely standalone, no React dependency
-              <li>You can replace all your objects with Immutable's Maps and Lists
-              <li>So you can make immutable guarantees, which means:
-                <ul>
-                  <li>Persistence
-                  <li>Easy data comparison
-                  <li>No side-effects
             `}
           >
             <Heading size={2} caps fit textColor="primary" textFont="primary">
@@ -270,6 +262,15 @@ export default class Presentation extends React.Component {
             <Heading size={2} caps fit textColor="white" textFont="primary">
               The interface
             </Heading>
+          </Slide>
+          <Slide bgColor="primary" transition={["fade"]}>
+            <Heading fit size={2} textColor="white">What is Immutable.js?</Heading>
+            <List>
+              <Appear><ListItem>A library by Lee Byron, an engineer from Facebook</ListItem></Appear>
+              <Appear><ListItem>Completely standalone (no React dependency or anything)</ListItem></Appear>
+              <Appear><ListItem>You can replace all your objects with Maps and Lists</ListItem></Appear>
+              <Appear><ListItem>Make immutable guarantees, which means: persistance, easy comparisons and no side-effects</ListItem></Appear>
+            </List>
           </Slide>
           <Slide bgColor="code" transition={["fade"]}>
             <Code fileName="objects-like-primitives" />
@@ -313,7 +314,7 @@ export default class Presentation extends React.Component {
             <Heading size={2} caps fit textColor="white" textFont="primary">
               Performance
             </Heading>
-            <Text><Link textColor="white" href="http://www.macwright.org/2015/05/18/practical-undo.html">View demo</Link></Text>
+            <Text><Link textColor="white" href="https://github.com/teamstrobe/watchlist/compare/immutable">View demo</Link></Text>
           </Slide>
           <Slide transition={["fade"]} bgColor="primary">
             <Heading size={2} caps fit textColor="white" textFont="primary">
