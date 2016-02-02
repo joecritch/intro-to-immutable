@@ -70,10 +70,11 @@ export default class Presentation extends React.Component {
         <Deck transition={["zoom", "slide"]} transitionDuration={500}>
           <Slide transition={["zoom"]} bgColor="primary" notes={`
             <ul>
-              <li>Interface developer and co-founder of Strobe, a development team based in Manchester.
-              <li>Will cover:
+              <li>Interface developer
+              <li>Co-founder of Strobe, a development team based in Manchester
+              <li>Talk is about immutable data.
               <ul>
-                <li>Why mutation can be a bad thing
+                <li>Disadvantages of mutable data in JavaScript
                 <li>Immutable data with Immutable.js
                 <li>A couple of examples
             `}
@@ -109,40 +110,23 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Primitive values (strings, integers, basically anything that's not an object (remember arrays are objects in JS))
-              <li>If you want to change a primitive value, you will be returned a new value.
-              <li>So methods on primitives do not mutate the original.
-              <li>Allows you to keep hold of the original value.
-              <li>Lovely.
-            `}
-          >
-            <Heading fit>
-              Changing primitives
-            </Heading>
-            <Code fileName="changing-a-string" />
-            <Text bold caps textColor="tertiary">(Not mutation)</Text>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="code" notes={`
-            <ul>
-              <li>Unfortunately...
-              <li>JavaScript\'s Objects work differently.
-              <li>You *can* mutate them.
+              <li>Mutation is changing an object after they have been created.
               <li>Notice the lack of new object when we mutate the firstName property.
+              <li>It\'s still the same object in memory.
+              <li>This is very common in JavaScript, as that\'s how the Object API works by default.
             </ul>
             `}
           >
             <Heading fit>
-              Changing objects
+              Mutating an object
             </Heading>
 
             <Code fileName="changing-an-object" />
-
-            <Text bold caps textColor="tertiary">(Mutation)</Text>
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Persistence refers to accessing both previous and current values.
-              <li>JS struggles with that.
+              <li>Persistence refers to accessing previous values as well as the current value.
+              <li>JS struggles with object persistence.
               <li>Even with assigning a variable before mutation... obj1 changes with obj2
               <li>That\`s because all Object variables in JS are assigned to their reference, not their value.
             </ul>
@@ -162,28 +146,9 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Similarly, comparing the value of two objects is difficult and slow
-              <li>With the standard mutative API, we can't use === checks
-              <li>Because they will always be equal because it is the same reference
-            `}
-          >
-            <Heading fit>Comparing objects :(</Heading>
-            <Fill>
-            <CodePane
-              lang="js"
-              source={sample("comparing-objects")}
-              margin="50px auto"
-              style={{
-                fontSize: "1em"
-              }}
-            />
-            </Fill>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="code" notes={`
-            <ul>
-              <li>The worst part.
+              <li>Even worse...
               <li>If you pass a mutable object to a third-party function
-              <li>Anything could happen to it.
+              <li>Anything could happen to it (someone might delete some properties, etc.)
               <li>Pete Hunt calls shared mutable state "the root of all evil"
             `}
           >
@@ -199,8 +164,24 @@ export default class Presentation extends React.Component {
             />
             </Fill>
           </Slide>
+          <Slide transition={["fade"]} bgColor="code" notes={`
+            <ul>
+              <li>Primitive values (strings, integers, basically anything that's not an object (remember arrays are objects too))
+              <li>Primitives are immutable; they <strong>cannot be changed after they are created</strong>.
+              <li>If you want to change a primitive value, you will be returned a new value.
+              <li>So methods on primitives do not mutate the original.
+              <li>Allows you to keep hold of the original value.
+              <li>Lovely.
+            `}
+          >
+            <Heading fit>
+              Immutable primitives
+            </Heading>
+            <Code fileName="changing-a-string" />
+          </Slide>
           <Slide transition={["slide", "fade"]} bgColor="black" notes={`
             <ul>
+              <li>Can we apply the principles from primitive values to objects?
               <li>Can we overcome these issues natively?
               <li>Do immutable objects exist in JavaScript?
             `}
@@ -214,10 +195,11 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>We can shallow-clone objects (or even deep-clone, but thats expensive)
+              <li>Before we look at Immutable.js, lets look at our other options
+              <li>We can shallow-clone objects
               <li>jQuery has an implementation of this, as does ES2015
               <li>This is pretty legit. Redux's examples work this way.
-              <li>Enables persistence.
+              <li>Helps with persistence, as we can access the unmodified "obj1"
               <li>But the objects themselves are still mutable.
             `}
           >
@@ -228,10 +210,10 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>ES2015 can freeze objects
-              <li>But this happens on runtime, which in strict mode, throws errors
-              <li>Objects might be frozen, might not
-              <li>Only available in ES2015. And still only by convention.
+              <li>ES2015 can freeze objects, making them immutable on runtime
+              <li>In strict mode, attempting to mutate an object will throw an error
+              <li>But... only available in ES2015.
+              <li>+ it is only by convention, Objects might be frozen, might not
             `}
           >
             <Heading size={2} fit textColor="white">
@@ -241,9 +223,10 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} notes={`
             <ul>
+              <li>And that is an issue.
               <li>A quote from the super clever Rich Hickey
               <li>Clojure's data structures are completely immutable.
-              <li>So you can make guarantees across your codebase.
+              <li>... so you can make guarantees across your codebase.
             `}
           >
             <BlockQuote textColor="white">
@@ -253,7 +236,9 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["slide"]} bgColor="black" notes={`
             <ul>
+              <li>We want to make those guarantees in our JavaScript
               <li>Immutable.js is a solution to this problem
+              <li>with its immutable API</li>
             `}
           >
             <Heading size={2} caps fit textColor="primary" textFont="primary">
@@ -268,8 +253,7 @@ export default class Presentation extends React.Component {
             <List>
               <Appear><ListItem>A library by Lee Byron, an engineer from Facebook</ListItem></Appear>
               <Appear><ListItem>Completely standalone (no React dependency or anything)</ListItem></Appear>
-              <Appear><ListItem>You can replace all your objects with Maps and Lists</ListItem></Appear>
-              <Appear><ListItem>Make immutable guarantees, which means: persistance, easy comparisons and no side-effects</ListItem></Appear>
+              <Appear><ListItem>A fully immutable API, with new data types</ListItem></Appear>
             </List>
           </Slide>
           <Slide bgColor="code" transition={["fade"]}>

@@ -1,11 +1,11 @@
-var I = require('immutable');
+const I = require("immutable");
 
-var obj1 = I.Map({
-  firstName: 'Paul',
-  lastName: 'Daniels'
+const obj1 = new I.Map({
+  firstName: "Paul",
+  lastName: "Daniels"
 });
 
-var obj2 = obj1.set('firstName', 'Jeff');
+const obj2 = obj1.set("firstName", "Jeff");
 
-// ==> (obj1 === obj2) ==> false
-// ==> (obj1.get('firstName')) ==> "Paul"
+// obj1 !== obj2
+// obj1.get('firstName') === "Paul"

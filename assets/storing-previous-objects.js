@@ -4,4 +4,5 @@ var obj1 = {
 };
 var obj2 = obj1;
 obj2.firstName = "Jeff";
-// obj1.firstName ==> "Jeff"
+// obj1.firstName === "Jeff"
+// obj1 === obj2
