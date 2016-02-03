@@ -91,7 +91,7 @@ export default class Presentation extends React.Component {
 
 
             <Link href="https://github.com/FormidableLabs/spectacle">
-              <Text margin="50px auto" bold textColor="tertiary">A talk by @joecritchley</Text>
+              <Text margin="50px auto" bold textColor="tertiary">A talk by Joe Critchley</Text>
             </Link>
 
           </Slide>
