@@ -9,6 +9,6 @@ obj = Object.assign({}, obj, {
 )})
 
 // Immutable
-obj = obj.updateIn(
-  "author", "firstName", "Steve"
+obj = obj.updateIn(["author"],
+  map => map.set("firstName", "Steve")
 );

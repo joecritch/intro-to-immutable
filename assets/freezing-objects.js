@@ -1,7 +1,7 @@
-const myFunc = function (obj, cb) {
+function myFunc(obj, cb) {
   cb(obj);
-};
-const myObj = { firstName: "Jack", lastName: "Daniels" };
+}
+const myObj = { firstName: "Jack" };
 Object.freeze(myObj);
 myFunc(myObj, (obj) => {
   // Change will throw (in strict mode)

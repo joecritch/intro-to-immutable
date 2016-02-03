@@ -72,11 +72,10 @@ export default class Presentation extends React.Component {
             <ul>
               <li>Interface developer
               <li>Co-founder of Strobe, a development team based in Manchester
-              <li>Talk is about immutable data.
+              <li>This talk is about application data
               <ul>
-                <li>Disadvantages of mutable data in JavaScript
-                <li>Immutable data with Immutable.js
-                <li>A couple of examples
+                <li>The so-called state of data in JavaScript today
+                <li>How to improve it with Immutable.js
             `}
           >
 
@@ -98,6 +97,7 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["slide"]} bgColor="black" notes={`
             <ul>
+              <li>First up...
               <li>Let's look at what object mutation is and why its annoying
             `}
           >
@@ -110,10 +110,10 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Mutation is changing an object after they have been created.
+              <li>Mutation is changing an object after it has been created.
               <li>Notice the lack of new object when we mutate the firstName property.
               <li>It\'s still the same object in memory.
-              <li>This is very common in JavaScript, as that\'s how the Object API works by default.
+              <li>This is very common in JavaScript, as that\'s how its Object API works by default.
             </ul>
             `}
           >
@@ -125,10 +125,10 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Persistence refers to accessing previous values as well as the current value.
+              <li>Persistence is useful: it refers to accessing previous values as well as the current value.
               <li>JS struggles with object persistence.
-              <li>Even with assigning a variable before mutation... obj1 changes with obj2
-              <li>That\`s because all Object variables in JS are assigned to their reference, not their value.
+              <li>Even with assigning a variable before mutation, obj1 changes with obj2
+              <li>That\'s because all Object variables in JS are assigned to their reference, not their value.
             </ul>
             `}
           >
@@ -147,8 +147,9 @@ export default class Presentation extends React.Component {
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
               <li>Even worse...
-              <li>If you pass a mutable object to a third-party function
+              <li>If you pass an object to a third-party function
               <li>Anything could happen to it (someone might delete some properties, etc.)
+              <li><i>See example</i>
               <li>Pete Hunt calls shared mutable state "the root of all evil"
             `}
           >
@@ -166,11 +167,13 @@ export default class Presentation extends React.Component {
           </Slide>
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
-              <li>Primitive values (strings, integers, basically anything that's not an object (remember arrays are objects too))
+              <li>Primitive values (strings, integers, basically anything that's not an object, remembering that arrays are objects too)
               <li>Primitives are immutable; they <strong>cannot be changed after they are created</strong>.
               <li>If you want to change a primitive value, you will be returned a new value.
+              <li><i>See example</i>
               <li>So methods on primitives do not mutate the original.
               <li>Allows you to keep hold of the original value.
+              <li>This trivially allows persistence and a lack of side-effects
               <li>Lovely.
             `}
           >
@@ -196,9 +199,9 @@ export default class Presentation extends React.Component {
           <Slide transition={["fade"]} bgColor="code" notes={`
             <ul>
               <li>Before we look at Immutable.js, lets look at our other options
-              <li>We can shallow-clone objects
-              <li>jQuery has an implementation of this, as does ES2015
-              <li>This is pretty legit. Redux's examples work this way.
+              <li>To get around mutatation, we can shallow-clone objects
+              <li>jQuery has an implementation of this, as does <span style="color: yellow">ES2015</span>
+              <li><span style="color: yellow">Redux</span>'s examples work this way. This is pretty legit.
               <li>Helps with persistence, as we can access the unmodified "obj1"
               <li>But the objects themselves are still mutable.
             `}
@@ -224,9 +227,10 @@ export default class Presentation extends React.Component {
           <Slide transition={["fade"]} notes={`
             <ul>
               <li>And that is an issue.
-              <li>A quote from the super clever Rich Hickey
-              <li>Clojure's data structures are completely immutable.
-              <li>... so you can make guarantees across your codebase.
+              <li>Clojure's data structures are completely immutable, so you can make guarantees across your codebase.
+              <li>And here's what the creator of Clojure, the super clever Rich Hickey, said:
+              <li><i style="color: yellow">Read quote</i>
+              <li>Unfortunately, JavaScript has exactly that—a mixed API
             `}
           >
             <BlockQuote textColor="white">
@@ -237,8 +241,8 @@ export default class Presentation extends React.Component {
           <Slide transition={["slide"]} bgColor="black" notes={`
             <ul>
               <li>We want to make those guarantees in our JavaScript
-              <li>Immutable.js is a solution to this problem
-              <li>with its immutable API</li>
+              <li>Immutable.js is a solution to this problem, with its immutable API</li>
+              <li>So let's take a look at it...
             `}
           >
             <Heading size={2} caps fit textColor="primary" textFont="primary">
@@ -248,7 +252,12 @@ export default class Presentation extends React.Component {
               The interface
             </Heading>
           </Slide>
-          <Slide bgColor="primary" transition={["fade"]}>
+          <Slide bgColor="primary" transition={["fade"]} notes={`
+            <ul>
+              <li>But first...
+              <li>What is Immutable.JS exactly?
+            `}
+          >
             <Heading fit size={2} textColor="white">What is Immutable.js?</Heading>
             <List>
               <Appear><ListItem>A library by Lee Byron, an engineer from Facebook</ListItem></Appear>
@@ -256,19 +265,56 @@ export default class Presentation extends React.Component {
               <Appear><ListItem>A fully immutable API, with new data types</ListItem></Appear>
             </List>
           </Slide>
-          <Slide bgColor="code" transition={["fade"]}>
+          <Slide bgColor="code" transition={["fade"]} notes={`
+            <ul>
+              <li>How do we handle objects with Immutable?
+              <li>We use Maps. We can pass initial values into a Map as a plain object.
+              <li>But what's returned is a custom instance.
+              <li>And when we set anything on this value, instead of mutating it, we get a new one.
+              <li>Just like primitive values.
+              <li>No longer referentially equal.
+              <li>And we have persistent data.
+            `}
+          >
             <Code fileName="objects-like-primitives" />
           </Slide>
-          <Slide bgColor="code" transition={["fade"]}>
+          <Slide bgColor="code" transition={["fade"]} notes={`
+            <ul>
+              <li>What about arrays?
+              <li>We use the List type instead.
+              <li>With JS arrays, the push method is mutative.
+              <li>In an Immutable List, its of course immutable. So you get a new value returned.
+            `}
+          >
             <Code fileName="immutable-example-2" />
           </Slide>
-          <Slide bgColor="code" transition={["fade"]}>
+          <Slide bgColor="code" transition={["fade"]} notes={`
+            <ul>
+              <li>JS does have a few non-mutative methods, such as map and filter
+              <li>And Immutable works in a compatible fashion
+              <li>The only difference being that you have to use the <strong>get</strong> method when accessing properties
+              <li>The "includes" method is pretty nice too, which is similar to the recently spec'd ES2016 method
+            `}
+          >
             <Code fileName="immutable-iteration" ext="es6" />
           </Slide>
-          <Slide bgColor="code" transition={["fade"]}>
+          <Slide bgColor="code" transition={["fade"]} notes={`
+            <ul>
+              <li>How do we handle nested structures?
+              <li>In a mutable object, we could just use dot notation to walk the path of the obect.
+              <li>But you now know why that's bad.
+              <li>The other option is to do nested object cloning. This is super messy.
+              <li>Immutable offers a very expressive way to walk the path and return a new structure.
+            `}
+          >
             <Code fileName="immutable-deep" ext="es6" />
           </Slide>
-          <Slide transition={["slide"]} bgColor="black">
+          <Slide transition={["slide"]} bgColor="black" notes={`
+            <ul>
+              <li>So that's a quick look at the common Iterable types in Immutable
+              <li>Before we look into the benefits of using Immutable, lets see how it works under the hood
+            `}
+          >
             <Heading size={2} caps fit textColor="primary" textFont="primary">
               Immutable.js:
             </Heading>
@@ -284,7 +330,10 @@ export default class Presentation extends React.Component {
           <Slide bgColor="code" transition={["fade"]} bgImage={images.dag6.replace("/", "")} />
           <Slide bgColor="code" transition={["fade"]} bgImage={images.dag7.replace("/", "")} />
           <Slide bgColor="code" transition={["fade"]} bgImage={images.trie.replace("/", "")} bgDarken={0.5}>
-            <Text fit textColor="white">https://youtu.be/I7IdS-PbEgI?t=5m18s</Text>
+            <Heading size={2} textColor="white">Tries</Heading>
+            <Text fit textColor="white"><Link textColor="white" href="https://youtu.be/I7IdS-PbEgI?t=5m18s">
+              https://youtu.be/I7IdS-PbEgI?t=5m18s
+            </Link></Text>
           </Slide>
           <Slide transition={["slide"]} bgColor="black">
             <Heading size={2} caps fit textColor="primary" textFont="primary">
