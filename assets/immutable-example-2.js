@@ -1,11 +1,9 @@
 // Arrays
-let firstNames = ["Jeff", "Paul", "Jack"];
-let names = [];
-names.push(`${firstNames[0]} Daniels`);
+let names = ["Jeff", "Paul"];
+names.push("Jack");
+names[2]; // === "Jack"
 
 // Immutable Lists
-firstNames = new I.List(["Jeff", "Paul", "Jack"]);
-names = new I.List();
-names = names.push(
-  `${firstNames.get(0)} Daniels`
-);
+names = new I.List(["Jeff", "Paul"]);
+names = names.push("Jack");
+names.get(2); // === "Jack"

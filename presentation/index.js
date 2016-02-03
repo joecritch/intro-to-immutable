@@ -129,6 +129,7 @@ export default class Presentation extends React.Component {
               <li>JS struggles with object persistence.
               <li>Even with assigning a variable before mutation, obj1 changes with obj2
               <li>That\'s because all Object variables in JS are assigned to their reference, not their value.
+              <li>obj1 <strong>is</strong> obj2
             </ul>
             `}
           >
@@ -178,7 +179,7 @@ export default class Presentation extends React.Component {
             `}
           >
             <Heading fit>
-              Immutable primitives
+              Immutable primitives ;)
             </Heading>
             <Code fileName="changing-a-string" />
           </Slide>
@@ -207,7 +208,7 @@ export default class Presentation extends React.Component {
             `}
           >
             <Heading size={2} fit textColor="white">
-              Cloning objects
+              Cloning objects :|
             </Heading>
             <Code fileName="cloning-objects" />
           </Slide>
@@ -220,7 +221,7 @@ export default class Presentation extends React.Component {
             `}
           >
             <Heading size={2} fit textColor="white">
-              Freezing objects
+              Freezing objects :|
             </Heading>
             <Code fileName="freezing-objects" />
           </Slide>
@@ -230,7 +231,7 @@ export default class Presentation extends React.Component {
               <li>Clojure's data structures are completely immutable, so you can make guarantees across your codebase.
               <li>And here's what the creator of Clojure, the super clever Rich Hickey, said:
               <li><i style="color: yellow">Read quote</i>
-              <li>Unfortunately, JavaScript has exactly that—a mixed API
+              <li>Unfortunately, JavaScript has exactly that—a mixed API, because primitives are immutable, but objects are mutable
             `}
           >
             <BlockQuote textColor="white">
@@ -276,6 +277,7 @@ export default class Presentation extends React.Component {
               <li>And we have persistent data.
             `}
           >
+            <Heading fit size={2} textColor="white">Objects vs. Maps</Heading>
             <Code fileName="objects-like-primitives" />
           </Slide>
           <Slide bgColor="code" transition={["fade"]} notes={`
@@ -286,6 +288,7 @@ export default class Presentation extends React.Component {
               <li>In an Immutable List, its of course immutable. So you get a new value returned.
             `}
           >
+            <Heading fit size={2} textColor="white">Array vs. Lists</Heading>
             <Code fileName="immutable-example-2" />
           </Slide>
           <Slide bgColor="code" transition={["fade"]} notes={`
@@ -293,9 +296,9 @@ export default class Presentation extends React.Component {
               <li>JS does have a few non-mutative methods, such as map and filter
               <li>And Immutable works in a compatible fashion
               <li>The only difference being that you have to use the <strong>get</strong> method when accessing properties
-              <li>The "includes" method is pretty nice too, which is similar to the recently spec'd ES2016 method
             `}
           >
+            <Heading fit size={2} textColor="white">Iteration</Heading>
             <Code fileName="immutable-iteration" ext="es6" />
           </Slide>
           <Slide bgColor="code" transition={["fade"]} notes={`
@@ -322,38 +325,61 @@ export default class Presentation extends React.Component {
               The implementation
             </Heading>
           </Slide>
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag.replace("/", "")} />
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag2.replace("/", "")} />
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag3.replace("/", "")} />
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag4.replace("/", "")} />
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag.replace("/", "")} notes={`
+            <ul>
+              <li>Directed graph — nodes are pointing to each other
+              <li>Acyclic — nodes cannot refer back to themselves
+            `}
+          />
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag2.replace("/", "")} notes={`
+            <ul>
+              <li>What happens if we want to update a node in the graph?
+              <li>We want to reuse as much of the graph as we can.
+            `}
+          />
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag3.replace("/", "")} notes={`
+            <ul>
+              <li>Well, because we are dealing with immutable data, we need to make a new copy of it, rather than mutate it
+            `}
+          />
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag4.replace("/", "")} notes={`
+            <ul>
+              <li>And we also need to update all nodes that needs to re-point to this new node
+            `}
+          />
           <Slide bgColor="code" transition={["fade"]} bgImage={images.dag5.replace("/", "")} />
           <Slide bgColor="code" transition={["fade"]} bgImage={images.dag6.replace("/", "")} />
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag7.replace("/", "")} />
-          <Slide bgColor="code" transition={["fade"]} bgImage={images.trie.replace("/", "")} bgDarken={0.5}>
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.dag7.replace("/", "")} notes={`
+            <ul>
+              <li>All the orange nodes can still reference the original objects, as they are unchanged
+            `}
+          />
+          <Slide bgColor="code" transition={["fade"]} bgImage={images.trie.replace("/", "")} bgDarken={0.5} notes={`
+            <ul>
+              <li>Immutable JS actually uses Tries under the hood, which are a variant of DAGs
+              <li>They are a little more complex, so I\'ll leave a youtube link for another who wants to dive in.
+            `}
+          >
             <Heading size={2} textColor="white">Tries</Heading>
             <Text fit textColor="white"><Link textColor="white" href="https://youtu.be/I7IdS-PbEgI?t=5m18s">
               https://youtu.be/I7IdS-PbEgI?t=5m18s
             </Link></Text>
           </Slide>
-          <Slide transition={["slide"]} bgColor="black">
+          <Slide transition={["slide"]} bgColor="black" notes={`
+            <ul>
+              <li>Alright, let\'s look at some benefits to using Immutable JS
+              <li>I have a small side project called Watchlist
+              <li>A basic movie watchlist built in React JS
+              <li>I wanted to add Immutable data structures in place of plain objects and arrays
+            `}
+          >
             <Heading size={2} caps fit textColor="primary" textFont="primary">
               Some Benefits
             </Heading>
             <Heading size={2} caps fit textColor="white" textFont="primary">
               with a demo
             </Heading>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="primary">
-            <Heading size={2} caps fit textColor="white" textFont="primary">
-              Performance
-            </Heading>
             <Text><Link textColor="white" href="https://github.com/teamstrobe/watchlist/compare/immutable">View demo</Link></Text>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="primary">
-            <Heading size={2} caps fit textColor="white" textFont="primary">
-              Persistence
-            </Heading>
-            <Text><Link textColor="white" href="http://www.macwright.org/2015/05/18/practical-undo.html">View demo</Link></Text>
           </Slide>
           <Slide bgColor="black" transition={["slide"]}>
             <Heading size={2} caps fit textColor="primary" textFont="primary">
@@ -364,6 +390,7 @@ export default class Presentation extends React.Component {
               <Appear><ListItem textColor="primary"><Link textColor="primary" href="http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript">Using Immutable Data Structures in JavaScript</Link></ListItem></Appear>
               <Appear><ListItem textColor="primary"><Link textColor="primary" href="http://reactkungfu.com/2015/08/pros-and-cons-of-using-immutability-with-react-js/">Pros and Cons of Immutability in React JS</Link></ListItem></Appear>
               <Appear><ListItem textColor="primary"><Link textColor="primary" href="http://codequarterly.com/2011/rich-hickey/">Rich Hickey on Immutability</Link></ListItem></Appear>
+              <Appear><ListItem textColor="primary"><Link textColor="primary" href="http://www.macwright.org/2015/05/18/practical-undo.html">Undo functionality with Immutable</Link></ListItem></Appear>
               <Appear><Heading size={3} textColor="white">Libraries/proposals</Heading></Appear>
               <Appear><ListItem textColor="primary"><Link textColor="primary" href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</Link></ListItem></Appear>
               <Appear><ListItem textColor="primary"><Link textColor="primary" href="http://swannodette.github.io/mori/">mori</Link></ListItem></Appear>
@@ -376,6 +403,7 @@ export default class Presentation extends React.Component {
               Cheers.
             </Heading>
             <Text fit bold>Questions — @joecritchley</Text>
+            <Text fit bold textColor="white" margin="5em 0">intro-to-immutable.surge.sh</Text>
           </Slide>
         </Deck>
       </Spectacle>
