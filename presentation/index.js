@@ -277,7 +277,7 @@ export default class Presentation extends React.Component {
               <li>And we have persistent data.
             `}
           >
-            <Heading fit size={2} textColor="white">Objects vs. Maps</Heading>
+            <Heading fit size={2} textColor="white">Immutable Maps</Heading>
             <Code fileName="objects-like-primitives" />
           </Slide>
           <Slide bgColor="code" transition={["fade"]} notes={`
@@ -288,7 +288,7 @@ export default class Presentation extends React.Component {
               <li>In an Immutable List, its of course immutable. So you get a new value returned.
             `}
           >
-            <Heading fit size={2} textColor="white">Array vs. Lists</Heading>
+            <Heading fit size={2} textColor="white">Arrays vs. Immutable Lists</Heading>
             <Code fileName="immutable-example-2" />
           </Slide>
           <Slide bgColor="code" transition={["fade"]} notes={`
@@ -310,7 +310,12 @@ export default class Presentation extends React.Component {
               <li>Immutable offers a very expressive way to walk the path and return a new structure.
             `}
           >
+            <Heading fit size={2} textColor="white">Updating nested structures (1)</Heading>
             <Code fileName="immutable-deep" ext="es6" />
+          </Slide>
+          <Slide bgColor="code" transition={["fade"]}>
+            <Heading fit size={2} textColor="white">Updating nested structures (2)</Heading>
+            <Code fileName="immutable-deep-2" ext="es6" />
           </Slide>
           <Slide transition={["slide"]} bgColor="black" notes={`
             <ul>
@@ -379,7 +384,7 @@ export default class Presentation extends React.Component {
             <Heading size={2} caps fit textColor="white" textFont="primary">
               with a demo
             </Heading>
-            <Text><Link textColor="white" href="https://github.com/teamstrobe/watchlist/compare/immutable">View demo</Link></Text>
+            <Text margin="2em 0"><Link textColor="white" href="https://github.com/teamstrobe/watchlist/compare/immutable">View GitHub</Link></Text>
           </Slide>
           <Slide bgColor="black" transition={["slide"]}>
             <Heading size={2} caps fit textColor="primary" textFont="primary">
